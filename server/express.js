@@ -23,8 +23,8 @@ app.use(helmet());
 app.use(cors());
 
 //  Routes
-app.use("/api", userRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/", userRoutes);
+app.use("/", authRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/qualifications", qualificationRoutes);

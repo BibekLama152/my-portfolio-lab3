@@ -1,35 +1,25 @@
-import config from "./config/config.js";
-import app from "./server/express.js";
-import mongoose from "mongoose";
+// server.js
+import 'dotenv/config';
+import mongoose from 'mongoose';
+import app from './server/express.js';  // ← import the app instance
 
-mongoose.Promise = global.Promise;
+const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
+if (!uri) {
+  console.error('  No MongoDB URI found');
+  process.exit(1);
+}
+console.info(' Connecting to MongoDB at', uri);
 
-//  Connect to MongoDB using dynamic URI from config
-mongoose.connect(config.mongoUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log(" Connected to the database!"))
-.catch((err) => {
-  console.error(" DB connection failed:", err);
-  process.exit(1); // Exit if failed
-});
-
-//  Optional: Handle runtime connection errors
-mongoose.connection.on("error", () => {
-  throw new Error(` Unable to connect to database: ${config.mongoUri}`);
-});
-
-//  Test route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to My Portfolio API." });
-});
-
-//  Start server
-app.listen(config.port, (err) => {
-  if (err) {
-    console.error(" Server start error:", err);
-  } else {
-    console.info(` Server started on port ${config.port}`);
-  }
-});
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.info('  MongoDB connected');
+    const port = process.env.PORT || 5000;
+    app.listen(port, () =>
+      console.info(`  Server listening on http://localhost:${port}`)
+    );
+  })
+  .catch(err => {
+    console.error('  MongoDB connection error:', err);
+    process.exit(1);
+  });
