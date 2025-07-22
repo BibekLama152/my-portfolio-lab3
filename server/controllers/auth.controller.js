@@ -3,8 +3,6 @@ import { expressjwt as expressJwt } from "express-jwt";
 import User from "../models/user.model.js";
 import config from "../../config/config.js";
 
-
-
 export const signin = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -15,12 +13,21 @@ export const signin = async (req, res) => {
     if (!user.authenticate(req.body.password))
       return res.status(401).json({ error: "Email and password do not match" });
 
-    const token = jwt.sign({ _id: user._id }, config.jwtSecret);
-    res.cookie("t", token, { expire: new Date() + 9999 });
+    const token = jwt.sign(
+      { _id: user._id, role: user.role },
+      config.jwtSecret
+    );
+
+    res.cookie("t", token, {
+      httpOnly: true,
+      sameSite: "Strict",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 86400000
+    });
 
     return res.json({
       token,
-      user: { _id: user._id, name: user.name, email: user.email }
+      user: { _id: user._id, name: user.name, email: user.email, role: user.role }
     });
 
   } catch (err) {
@@ -39,6 +46,18 @@ export const requireSignin = expressJwt({
   userProperty: "auth"
 });
 
+
+export const signup = async (req, res) => {
+  const user = new User(req.body);
+  try {
+    await user.save();
+    res.status(201).json({ message: "Signup successful!" });
+  } catch (err) {
+    res.status(400).json({ error: "Signup failed", details: err });
+  }
+};
+
+
 export const hasAuthorization = (req, res, next) => {
   const authorized =
     req.profile && req.auth && req.profile._id.toString() === req.auth._id;
@@ -46,9 +65,4 @@ export const hasAuthorization = (req, res, next) => {
     return res.status(403).json({ error: "User is not authorized" });
   }
   next();
-
-  
 };
-
-
-
