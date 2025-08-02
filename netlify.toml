@@ -1,16 +1,13 @@
 # netlify.toml
 
 [build]
-  # build from the client/ folder
   base    = "client"
-  # publish the dist/ output (not client/dist)
   publish = "dist"
-  # install & build
   command = "npm install && npm run build"
 
 [build.environment]
-  # pin Node to 18.x so Rollup’s optional native deps won’t break
-  NODE_VERSION = "18.x"
+  # Use the Node 18 major line (Netlify accepts "18")
+  NODE_VERSION = "18"
 
 [[redirects]]
   from   = "/*"
