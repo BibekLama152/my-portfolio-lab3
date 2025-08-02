@@ -10,6 +10,11 @@ export default defineConfig({
     },
   },
   server: {
-    historyApiFallback: true, // 👈 KEY LINE TO FIX ROUTING
-  }
+    historyApiFallback: true,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+  },
 })
