@@ -1,52 +1,59 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// src/App.jsx
 
-import PublicLayout from './layouts/PublicLayout';
-import PortfolioLayout from './layouts/PortfolioLayout';
-import PrivateRoute from './auth/PrivateRoute';
+import React, { lazy, Suspense } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import UnicornHome from './pages/UnicornHome';
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
+import PublicLayout from './layouts/PublicLayout'
+import PortfolioLayout from './layouts/PortfolioLayout'
+import PrivateRoute from './auth/PrivateRoute'
 
-import Home from './pages/Home';
-import About from './pages/About';
-import Projects from './pages/Projects';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import ContactForm from './pages/ContactForm';
-import ProjectForm from './pages/ProjectForm';
-import QualificationForm from './pages/QualificationForm';
+// —— Lazy‐load all your pages —— //
+const UnicornHome       = lazy(() => import('./pages/UnicornHome'))
+const Signin            = lazy(() => import('./pages/Signin'))
+const Signup            = lazy(() => import('./pages/Signup'))
+const Home              = lazy(() => import('./pages/Home'))
+const About             = lazy(() => import('./pages/About'))
+const Projects          = lazy(() => import('./pages/Projects'))
+const Services          = lazy(() => import('./pages/Services'))
+const Contact           = lazy(() => import('./pages/Contact'))
+const ContactForm       = lazy(() => import('./pages/ContactForm'))
+const ProjectForm       = lazy(() => import('./pages/ProjectForm'))
+const QualificationForm = lazy(() => import('./pages/QualificationForm'))
 
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Always show PublicLayout at the top */}
-        <Route element={<PublicLayout />}>
-          {/* Public routes */}
-          <Route index element={<UnicornHome />} />
-          <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
+      {/* Wrap all your <Routes> in Suspense for a loading fallback */}
+      <Suspense fallback={<div>Loading page…</div>}>
+        <Routes>
+          {/* Public shell */}
+          <Route element={<PublicLayout />}>
+            <Route index element={<UnicornHome />} />
+            <Route path="signin" element={<Signin />} />
+            <Route path="signup" element={<Signup />} />
 
-          {/* Protected portfolio routes */}
-          <Route path="portfolio" element={<PrivateRoute />}>
-            <Route element={<PortfolioLayout />}>
-              <Route index element={<Home />} />
-              <Route path="home" element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="services" element={<Services />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="contact-form" element={<ContactForm />} />
-              <Route path="project-form" element={<ProjectForm />} />
-              <Route path="qualification-form" element={<QualificationForm />} />
+            {/* Protected portfolio area */}
+            <Route path="portfolio" element={<PrivateRoute />}>
+              <Route element={<PortfolioLayout />}>
+                <Route index element={<Home />} />
+                <Route path="home" element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="services" element={<Services />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="contact-form" element={<ContactForm />} />
+                <Route path="project-form" element={<ProjectForm />} />
+                <Route
+                  path="qualification-form"
+                  element={<QualificationForm />}
+                />
+              </Route>
             </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

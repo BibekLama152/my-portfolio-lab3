@@ -1,0 +1,14 @@
+# netlify.toml — tells Netlify how to build & serve your app
+
+[build]
+  # we’re building from the client/ subfolder:
+  base    = "client"
+  # the “npm run build” in client/ will output into client/dist
+  publish = "client/dist"
+  command = "npm install && npm run build"
+
+# Single-page‐app redirect: serve index.html for all routes
+[[redirects]]
+  from    = "/*"
+  to      = "/index.html"
+  status  = 200

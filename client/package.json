@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@jest/globals": "^30.0.5",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "concurrently": "^9.2.0",
