@@ -1,14 +1,18 @@
-# netlify.toml — tells Netlify how to build & serve your app
+# netlify.toml
 
 [build]
-  # we’re building from the client/ subfolder:
+  # build from the client/ folder
   base    = "client"
-  # the “npm run build” in client/ will output into client/dist
-  publish = "client/dist"
+  # publish the dist/ output (not client/dist)
+  publish = "dist"
+  # install & build
   command = "npm install && npm run build"
 
-# Single-page‐app redirect: serve index.html for all routes
+[build.environment]
+  # pin Node to 18.x so Rollup’s optional native deps won’t break
+  NODE_VERSION = "18.x"
+
 [[redirects]]
-  from    = "/*"
-  to      = "/index.html"
-  status  = 200
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
