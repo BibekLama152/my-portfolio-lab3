@@ -1,9 +1,11 @@
 // client/src/config.js
 
 /**
- * Base URL for your backend:
- * - Uses Vercel’s VITE_BACKEND_URL in production
- * - Falls back to localhost:5000 in development
+ * Base URL for your API:
+ * - In prod, comes from Vercel’s VITE_REACT_APP_API
+ * - In dev, falls back to localhost:5000/api
  */
 export const API =
-  import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+  import.meta.env.VITE_REACT_APP_API || 'http://localhost:5000/api';
+
+console.log('🎯 API base is', API);
