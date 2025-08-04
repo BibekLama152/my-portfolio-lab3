@@ -1,8 +1,12 @@
 // client/src/config.js
 
 /**
- * Base URL for your API, injected at build time by Vite/Vercel.
- * Falls back to localhost in development.
+ * Your API base URL:
+ * - Uses Vercel-injected VITE_BACKEND_URL in production
+ * - Falls back to localhost:5000 in development
  */
-export const API =
-  import.meta.env.VITE_REACT_APP_API || 'http://localhost:5000/api';
+const RAW = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
+export const API = RAW.endsWith('/api') ? RAW : `${RAW}/api`
+
+// Quick sanity check in the browser console:
+console.log('🎯 API base is', API)
