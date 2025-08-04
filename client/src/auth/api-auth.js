@@ -1,6 +1,6 @@
 // client/src/auth/api-auth.js
 
-import { API } from '../config'   // your Vite‐injected base URL
+import { API } from '../config'   // your Vite-injected base URL
 
 /**
  * Sign in (login) user.
