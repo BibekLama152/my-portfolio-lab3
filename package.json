@@ -2,32 +2,19 @@
   "name": "mern_skeleton",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Blessing Ajiboye",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.27.1",
-    "@babel/preset-env": "^7.27.2",
-    "@testing-library/jest-dom": "^6.6.4",
-    "@testing-library/react": "^16.3.0",
-    "babel-loader": "^10.0.0",
-    "concurrently": "^9.2.0",
-    "cross-env": "^7.0.3",
-    "jsdom": "^26.1.0",
-    "nodemon": "^3.1.10",
-    "vite": "^7.0.0",
-    "vitest": "^3.2.4"
-  },
   "scripts": {
     "frontend": "npm run dev --prefix client",
     "backend": "cross-env nodemon server.js",
+    "start": "node server.js",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.6.0",
     "body-parser": "^2.2.0",
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
@@ -41,8 +28,19 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "method-override": "^3.0.0",
-    "mongoose": "^8.16.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "mongoose": "^8.16.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "babel-loader": "^10.0.0",
+    "concurrently": "^9.2.0",
+    "cross-env": "^7.0.3",
+    "jsdom": "^26.1.0",
+    "nodemon": "^3.1.10",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
   }
 }
