@@ -22,12 +22,20 @@ app.use(compress());
 app.use(helmet());
 app.use(cors());
 
-//  Routes
-app.use("/", userRoutes);
-app.use("/", authRoutes);
-app.use("/api/contacts", contactRoutes);
-app.use("/api/projects", projectRoutes);
-app.use("/api/qualifications", qualificationRoutes);
+// Routes (make these exact)
+app.use('/api/auth', authRoutes);
+app.use('/api', userRoutes);
+app.use('/api/contacts', contactRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/qualifications', qualificationRoutes);
+
+
+
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true });
+});
+
+
 
 //  Error handler
 app.use((err, req, res, next) => {

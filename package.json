@@ -5,6 +5,8 @@
   "main": "server.js",
   "author": "Blessing Ajiboye",
   "license": "MIT",
+
+  "engines": { "node": "20.x" },
   "scripts": {
     "frontend": "npm run dev --prefix client",
     "backend": "cross-env nodemon server.js",
