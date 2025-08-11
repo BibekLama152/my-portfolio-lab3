@@ -1,11 +1,7 @@
 // client/src/config.js
+const baseApi = import.meta.env.VITE_REACT_APP_API || 'http://localhost:5000/api';
 
-/**
- * Base URL for your API:
- * - In prod, comes from Vercel’s VITE_REACT_APP_API
- * - In dev, falls back to localhost:5000/api
- */
-export const API =
-  import.meta.env.VITE_REACT_APP_API || 'http://localhost:5000/api';
+export const API = baseApi;      // used by api-auth.js
+export const API_URL = baseApi;  // used by auth-helper.js
 
-console.log('🎯 API base is', API);
+console.log('🎯 API base is', baseApi);

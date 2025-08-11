@@ -1,6 +1,5 @@
-// client/lib/auth-helper.js
-
-import { API_URL } from '../config'  // use the same client‐side config
+// client/src/auth/auth-helper.js
+import { API_URL } from '../config.js' // go up one level
 
 const auth = {
   authenticate(jwt, cb) {
@@ -21,7 +20,6 @@ const auth = {
       sessionStorage.removeItem('jwt')
     }
     cb()
-    // Also tell server to clear any session/cookie
     fetch(`${API_URL}/auth/signout`, { method: 'GET' })
       .catch(console.error)
   }
